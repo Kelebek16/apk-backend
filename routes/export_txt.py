@@ -2,9 +2,9 @@ from flask import Blueprint, send_file
 from db import get_conn, put_conn
 from io import BytesIO
 
-download_bp = Blueprint("download", __name__, url_prefix="/api/download")
+export_bp = Blueprint("export", __name__, url_prefix="/api/export")
 
-@download_bp.route("/positive", methods=["GET"])
+@export_bp.route("/positive", methods=["GET"])
 def download_positive_tweets():
     conn = get_conn()
     if not conn:
