@@ -2,7 +2,7 @@ from flask import Flask
 from config import Config
 from routes.tweets import tweets_bp
 from routes.export_txt import export_bp
-
+from routes.stats import stats_bp
 
 def create_app():
     app = Flask(__name__)
@@ -10,6 +10,9 @@ def create_app():
 
     app.register_blueprint(tweets_bp)
     app.register_blueprint(export_bp)
+    app.register_blueprint(stats_bp)
+
+
 
     @app.route("/health", methods=["GET"])
     def health_check():
