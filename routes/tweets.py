@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from db import get_conn, put_conn
+import traceback
 
 tweets_bp = Blueprint("tweets", __name__, url_prefix="/api/tweets")
 
@@ -29,7 +30,18 @@ def get_unprocessed_tweets():
         ]
         return jsonify({"success": True, "count": len(results), "data": results}), 200
     except Exception as e:
-        return jsonify({"success": False, "error": str(e)}), 500
+        traceback.print_exc()
+
+        return (
+            jsonify(
+                {
+                    "success": False,
+                    "error": str(e),
+                    "traceback": traceback.format_exc(),
+                }
+            ),
+            500,
+        )
     finally:
         if conn:
             put_conn(conn)
@@ -102,7 +114,19 @@ def label_tweet():
     except Exception as e:
         if conn:
             conn.rollback()
-        return jsonify({"success": False, "error": str(e)}), 500
+
+        traceback.print_exc()
+
+        return (
+            jsonify(
+                {
+                    "success": False,
+                    "error": str(e),
+                    "traceback": traceback.format_exc(),
+                }
+            ),
+            500,
+        )
     finally:
         if conn:
             put_conn(conn)
