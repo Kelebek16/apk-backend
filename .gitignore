@@ -39,3 +39,6 @@ build/
 
 # ---- Android (ileride eklersen) ----
 *.keystore
+
+# ---- Datasets ----
+*.txt
