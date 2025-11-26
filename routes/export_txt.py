@@ -42,5 +42,14 @@ def download_positive_tweets():
         )
         
     except Exception as e:
-        put_conn(conn)
-        return {'error': str(e)}, 500
+        import traceback
+        error_traceback = traceback.format_exc()
+        print(f"Error occurred: {str(e)}")
+        print(f"Traceback: {error_traceback}")
+        
+        if conn:
+            put_conn(conn)
+        return {
+            'error': str(e),
+            'traceback': error_traceback
+        }, 500
