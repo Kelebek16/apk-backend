@@ -8,14 +8,13 @@ DATA_FILE_PATH = os.getenv("DATA_FILE_PATH", "data.txt")
 
 
 def get_conn():
-    """Veritabanı bağlantısı oluşturur"""
     try:
         conn = psycopg.connect(
-            host=os.getenv('DB_HOST', 'localhost'),
-            port=os.getenv('DB_PORT', 5433),
-            dbname=os.getenv('DB_NAME', 'labeling_db'),
-            user=os.getenv('DB_USER', 'emre'),
-            password=os.getenv('DB_PASSWORD', '96cde509439a414b528d9b3a9d8d7392')
+            host=os.getenv('DB_HOST'),
+            port=os.getenv('DB_PORT'),
+            dbname=os.getenv('DB_NAME'),
+            user=os.getenv('DB_USER'),
+            password=os.getenv('DB_PASSWORD')
         )
         return conn
     except Exception as e:
@@ -24,10 +23,7 @@ def get_conn():
 
 
 def insert_tweets_from_file(file_path: str, batch_size: int = 1000):
-    """
-    data.txt içindeki satırları tweets_queue tablosuna ekler.
-    Her satır = tweet_text, is_processed = FALSE
-    """
+
     if not os.path.exists(file_path):
         print(f"❌ Dosya bulunamadı: {file_path}")
         return False
