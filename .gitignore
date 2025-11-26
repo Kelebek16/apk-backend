@@ -1,8 +1,41 @@
-venv/
+# ---- Python ----
 __pycache__/
 *.pyc
-*.log
-.env
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.env/
+*.env
+
+# ---- IDE / Editor ----
+.vscode/
 .idea/
+*.swp
+
+# ---- Logs ----
+*.log
+
+# ---- System files ----
 .DS_Store
-.env
+Thumbs.db
+
+# ---- Docker ----
+# Docker volume içeriği commitlenmez
+postgres_data/
+
+# ---- Sensitive ----
+# Private keyler asla git'e girmez
+*.pem
+*.key
+*.crt
+
+# ---- Cache / Build ----
+*.egg-info/
+dist/
+build/
+*.sqlite3
+
+# ---- Android (ileride eklersen) ----
+*.keystore
