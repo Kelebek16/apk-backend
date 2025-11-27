@@ -5,7 +5,6 @@ from config import DB_CONFIG
 
 delete_tweet_bp = Blueprint("delete_tweet", __name__)
 
-
 @delete_tweet_bp.route("/tweets/<int:tweet_id>", methods=["DELETE"])
 def delete_tweet(tweet_id):
     conn = None
