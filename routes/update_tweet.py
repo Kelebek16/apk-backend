@@ -3,8 +3,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from config import DB_CONFIG
 
-update_tweet_bp = Blueprint("update_tweet", __name__)
-
+update_tweet_bp = Blueprint("update_tweet_bp", __name__)
 
 @update_tweet_bp.route("/tweets/<int:tweet_id>", methods=["PUT"])
 def update_tweet_text(tweet_id):
@@ -22,7 +21,8 @@ def update_tweet_text(tweet_id):
         cur.execute(
             """
             UPDATE tweets_queue
-            SET tweet_text = %s
+            SET tweet_text = %s,
+                processed_at = CASE WHEN is_processed THEN CURRENT_TIMESTAMP ELSE processed_at END
             WHERE id = %s
             RETURNING id, tweet_text, is_processed, label, created_at, processed_at
             """,
@@ -33,6 +33,20 @@ def update_tweet_text(tweet_id):
         if not updated_row:
             conn.rollback()
             return jsonify({"success": False, "message": "Kayıt bulunamadı"}), 404
+
+        is_processed = updated_row["is_processed"]
+        label = updated_row["label"]
+
+        if is_processed and label == "positive":
+            cur.execute(
+                "UPDATE positive SET tweet_text = %s WHERE data_id = %s",
+                (new_text, tweet_id),
+            )
+        elif is_processed and label == "negative":
+            cur.execute(
+                "UPDATE negative SET tweet_text = %s WHERE data_id = %s",
+                (new_text, tweet_id),
+            )
 
         conn.commit()
 
