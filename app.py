@@ -13,6 +13,7 @@ from routes.get_negative_labeled import negative_labeled_bp
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+
     app.register_blueprint(update_tweet_bp)
     app.register_blueprint(delete_tweet_bp)
     app.register_blueprint(tweets_bp)
