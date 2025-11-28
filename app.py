@@ -9,6 +9,7 @@ from routes.add_positive import add_positive_bp
 from routes.add_negative import add_negative_bp
 from routes.get_positive_labeled import positive_labeled_bp
 from routes.get_negative_labeled import negative_labeled_bp
+from routes.relabel_tweet import relabel_tweet_bp
 
 def create_app():
     app = Flask(__name__)
@@ -23,6 +24,7 @@ def create_app():
     app.register_blueprint(add_negative_bp)
     app.register_blueprint(positive_labeled_bp)
     app.register_blueprint(negative_labeled_bp)
+    app.register_blueprint(relabel_tweet_bp)
 
     @app.route("/health", methods=["GET"])
     def health_check():
