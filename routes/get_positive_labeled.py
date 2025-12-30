@@ -20,7 +20,7 @@ def get_labeled_positive():
             SELECT id, data_id, tweet_text, created_at
             FROM positive
             WHERE id > %s
-            ORDER BY id
+            ORDER BY id DESC
             LIMIT %s;
             """,
             (last_id, batch_size),

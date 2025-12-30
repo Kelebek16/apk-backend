@@ -13,9 +13,9 @@ def get_unprocessed_tweets():
         batch_size = request.args.get("batch_size", default=1000, type=int)
 
         if batch_size <= 0:
-            batch_size = 500
-        if batch_size > 500:
-            batch_size = 500
+            batch_size = 100
+        if batch_size > 100:
+            batch_size = 100
 
         conn = get_conn()
         cur = conn.cursor()
