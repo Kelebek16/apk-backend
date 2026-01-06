@@ -7,7 +7,6 @@ from db import get_conn, put_conn
 
 dataset_download_bp = Blueprint("dataset_download_bp", __name__)
 
-
 @dataset_download_bp.route("/download_txt", methods=["GET"])
 def download_txt():
     conn = None
